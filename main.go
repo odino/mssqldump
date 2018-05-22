@@ -4,11 +4,11 @@ import (
 	"database/sql"
 	"encoding/csv"
 	"errors"
+	"fmt"
 	_ "github.com/denisenkom/go-mssqldb"
 	flags "github.com/jessevdk/go-flags"
 	log "github.com/sirupsen/logrus"
 	"os"
-	"fmt"
 )
 
 const version string = "1.0.0"
@@ -24,7 +24,7 @@ func main() {
 	handleError(err)
 	log.Debugf("options: %v", opts)
 
-	if (opts.Query == "v" || opts.Query == "version") {
+	if opts.Query == "v" || opts.Query == "version" {
 		fmt.Println(version)
 		os.Exit(0)
 	}
