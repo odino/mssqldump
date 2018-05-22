@@ -4,7 +4,7 @@ Dump a MSSQL query into a TSV file.
 
 ## Usage
 
-Download the binary, specify a connection string as an environment variable (`MSSQL_CONN`)
+Download the [binary](https://github.com/odino/mssqldump/releases), specify a connection string as an environment variable (`MSSQL_CONN`)
 and run it specifying the query you wanna run (`-q`):
 
 ```
