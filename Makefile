@@ -17,6 +17,6 @@ release: release_simple
 	docker run -ti --net host -v $$(pwd):/go/src/github.com/odino/mssqldump ${DOCKER_IMAGE_NAME} gox -output="builds/{{.Dir}}_{{.OS}}_{{.Arch}}_$$(./builds/simple -qv)"
 	sudo chown $$USER:$$USER builds
 	sudo chown $$USER:$$USER builds/*
-	ls -la builds | grep -v ".tar.gz" | grep mssqldump | awk '{print "tar -czf builds/" $$9 ".tar.gz builds/" $$9}' | bash
-	ls -la builds | grep -v ".tar.gz" | grep mssqldump | awk '{print "rm builds/" $$9}' | bash
+	cd builds; ls -la . | grep -v ".tar.gz" | grep mssqldump | awk '{print "tar -czf " $$9 ".tar.gz " $$9}' | bash
+	cd builds; ls -la . | grep -v ".tar.gz" | grep mssqldump | awk '{print "rm " $$9}' | bash
 	ls -la builds

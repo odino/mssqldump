@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-const version string = "1.0.0"
+const version string = "1.0.1"
 
 var opts struct {
 	Query       string `short:"q" long:"query" required:"true" description:"Query to run to extract data"`
