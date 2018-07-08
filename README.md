@@ -30,6 +30,18 @@ msdb	1	0.23937146273025442
 test	1	0.23937146273025442
 ```
 
+It also supports output in newline delimited JSON -- BigQuery anyone?
+
+```
+./mssqldump -q "SELECT Name, 1 as ID, RAND() as thing from sys.Databases" -f json
+{"ID":1,"Name":"master","thing":0.6214426254735921}
+{"ID":1,"Name":"tempdb","thing":0.6214426254735921}
+{"ID":1,"Name":"model","thing":0.6214426254735921}
+{"ID":1,"Name":"msdb","thing":0.6214426254735921}
+{"ID":1,"Name":"test","thing":0.6214426254735921}
+```
+
+
 If your query is `v`, `mssqldump` will print out its version information:
 
 ```
