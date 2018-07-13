@@ -1,6 +1,6 @@
 # mssqldump
 
-Dump a MSSQL query into a TSV file.
+Dump a MSSQL query into a TSV / JSON file.
 
 ## Usage
 
