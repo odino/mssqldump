@@ -5,11 +5,13 @@ import (
 	"encoding/csv"
 	"errors"
 	"fmt"
+	"os"
+	"strconv"
+
 	"github.com/Jeffail/gabs"
 	_ "github.com/denisenkom/go-mssqldb"
 	flags "github.com/jessevdk/go-flags"
 	log "github.com/sirupsen/logrus"
-	"os"
 )
 
 const version string = "1.1.0"
@@ -69,7 +71,7 @@ func output(rows *sql.Rows, format string, includeColumns bool) {
 	defer rows.Close()
 
 	if format == "json" {
-		outputJson(rows)
+		outputJSON(rows)
 	} else {
 		outputTsv(rows, includeColumns)
 	}
@@ -109,14 +111,14 @@ func outputTsv(rows *sql.Rows, includeColumns bool) {
 	handleError(rows.Err())
 }
 
-func outputJson(rows *sql.Rows) {
-	cols, err := rows.Columns()
+func outputJSON(rows *sql.Rows) {
+	cols, err := rows.ColumnTypes()
 	handleError(err)
 
 	for rows.Next() {
 		columns := make([]interface{}, len(cols))
 		columnPointers := make([]interface{}, len(cols))
-		for i, _ := range columns {
+		for i := range columns {
 			columnPointers[i] = &columns[i]
 		}
 
@@ -125,9 +127,17 @@ func outputJson(rows *sql.Rows) {
 		}
 
 		m := make(map[string]interface{})
-		for i, colName := range cols {
-			val := columnPointers[i].(*interface{})
-			m[colName] = *val
+		for i, col := range cols {
+			m[col.Name()] = *columnPointers[i].(*interface{})
+
+			switch t := col.DatabaseTypeName(); t {
+			case "DECIMAL":
+				dec, err := strconv.ParseFloat(string(m[col.Name()].([]uint8)), 64)
+
+				if err == nil {
+					m[col.Name()] = dec
+				}
+			}
 		}
 
 		jsonObj, _ := gabs.Consume(m)
