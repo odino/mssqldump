@@ -14,7 +14,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-const version string = "1.1.0"
+const version string = "1.1.1"
 
 var opts struct {
 	Query       string `short:"q" long:"query" required:"true" description:"Query to run to extract data"`
