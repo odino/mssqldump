@@ -8,7 +8,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/Jeffail/gabs"
+	"github.com/Jeffail/gabs/v2"
 	_ "github.com/denisenkom/go-mssqldb"
 	flags "github.com/jessevdk/go-flags"
 	log "github.com/sirupsen/logrus"
