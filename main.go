@@ -140,7 +140,7 @@ func outputJSON(rows *sql.Rows) {
 			}
 		}
 
-		jsonObj, _ := gabs.Consume(m)
+		jsonObj := gabs.Wrap(m)
 		fmt.Println(jsonObj.String())
 	}
 }
